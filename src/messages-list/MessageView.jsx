@@ -8,6 +8,11 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
     return acc;
   }, {})
 
+  const accountIdsToName = messages.reduce((acc, {accountName, accountId}) => {
+    acc[accountId] = accountName;
+    return acc;
+  }, {})
+
   const accountNamesKeys = Object.keys(accountNames);
 
   const [message, setMessage] = useState(null);
@@ -19,12 +24,14 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
       setMessage(target.value);
     }
     if(target.name === 'account'){
-      setAccountId(target.value);
+      setAccountId(accountNames[target.value]);
     }
   }
 
   const onNewMessagesHandler = () => {
-    onNewMessages(message, accountId);
+    const accountIdToSave = accountId || accountNames[accountNamesKeys[0]];
+    onNewMessages(message, accountIdToSave, accountIdsToName[accountIdToSave]);
+    setMessage('');
   }
 
   return <Fragment>
@@ -49,7 +56,7 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
       </tbody>
     </table>
     <div>
-      <input name="message" type="text" onChange={onChange}></input>
+      <input name="message" type="text" value={message} onChange={onChange}></input>
       <select name="account" onChange={onChange}>
         {accountNamesKeys.map((name) => <option key={name} value={name}>{name}</option>)}
       </select>

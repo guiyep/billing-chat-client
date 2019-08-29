@@ -6,20 +6,22 @@ import messageTypes from './MessageTypes';
 
 const defaultWebsocketUrl = 'ws://localhost:8080';
 
-const parseFromMessage = ({ accountName, message, link, type }) => ({
+const parseFromMessage = ({ accountName, accountId, message, link, type }) => ({
   message,
   link,
   accountName,
+  accountId,
   isUser: type === messageTypes.user,
   isClient: type === messageTypes.client,
   isLink: type === messageTypes.link,
 });
 
-const parseToMessage = (message, accountId, type) => ({
+const parseToMessage = ({message, accountId, type, accountName}) => ({
   message,
   accountId,
   type: type || messageTypes.client,
   name: 'ADD-MESSAGE',
+  accountName
 });
 
 const sendMessageToWebsocket = (websocket, object) => {
@@ -33,16 +35,18 @@ const ChatWidgetContainer = memo(({ websocketUrl }) => {
   const [stateMessagesQueue, setMessages] = useState([]);
 
   const handleOpen = () => {
-    sendMessageToWebsocket(websocket, { name: 'GET-ALL-MESSAGES-CLIENT'});
+    sendMessageToWebsocket(websocket, { name: 'GET-ALL-MESSAGES-CLIENT' });
   };
 
   const handleData = (data = '') => {
     const newMessages = JSON.parse(data) || [];
-    setMessages([...stateMessagesQueue, ...newMessages.map((message) => parseFromMessage(message))]);
+    if(newMessages.data){
+      setMessages([...newMessages.data.map(message => parseFromMessage(message))]);
+    }
   };
 
-  const onNewMessages = (message, accountId) => {
-    sendMessageToWebsocket(websocket, JSON.stringify(parseToMessage(message, accountId)));
+  const onNewMessages = (message, accountId, accountName) => {
+    sendMessageToWebsocket(websocket, parseToMessage({message, accountId, type: messageTypes.client, accountName}));
   };
 
   return (
