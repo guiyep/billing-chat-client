@@ -14,7 +14,13 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
   const [accountId, setAccountId] = useState(accountNames[accountNamesKeys[0]]);
 
   const onChange =(e) => {
-
+    const target = e.currentTarget;
+    if(target.name === 'message'){
+      setMessage(target.value);
+    }
+    if(target.name === 'account'){
+      setAccountId(target.value);
+    }
   }
 
   const onNewMessagesHandler = () => {
@@ -44,7 +50,7 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
     </table>
     <div>
       <input name="message" type="text" onChange={onChange}></input>
-      <select onChange={onChange}>
+      <select name="account" onChange={onChange}>
         {accountNamesKeys.map((name) => <option key={name} value={name}>{name}</option>)}
       </select>
       <button onClick={onNewMessagesHandler}>Send Message</button>
