@@ -4,7 +4,7 @@
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  height: 250px;
   pointer-events: none;
 }
 
@@ -32,8 +32,15 @@
   }
 }
 
+.table-container {
+  height: 550px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
 .table-messages {
-  border: 1px solid; 
+  border: 1px solid;
+  width: 100%;
 }
 
 .table-messages td {

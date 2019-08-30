@@ -35,26 +35,28 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
   }
 
   return <Fragment>
-      <table className="table-messages">
-      <thead>
-        <tr>
-          <th>
-            Account Name
-          </th>
-          <th>
-            message
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-      {
-        messages.map((msg, index) => <tr key={index}>
-          <td>{msg.accountName}</td>
-          <td>{msg.message}</td>
-        </tr>)
-      }
-      </tbody>
-    </table>
+      <div className="table-container">
+        <table className="table-messages">
+          <thead>
+            <tr>
+              <th>
+                Account Name
+              </th>
+              <th>
+                message
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            messages.map((msg, index) => <tr key={index}>
+              <td>{msg.accountName}</td>
+              <td>{msg.message}</td>
+            </tr>)
+          }
+          </tbody>
+        </table>
+      </div>
     <div>
       <input name="message" type="text" value={message} onChange={onChange}></input>
       <select name="account" onChange={onChange}>
