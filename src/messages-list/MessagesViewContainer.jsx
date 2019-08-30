@@ -14,6 +14,7 @@ const parseFromMessage = ({ accountName, accountId, message, link, type }) => ({
   isUser: type === messageTypes.user,
   isClient: type === messageTypes.client,
   isLink: type === messageTypes.link,
+  type
 });
 
 const parseToMessage = ({message, accountId, type, accountName}) => ({

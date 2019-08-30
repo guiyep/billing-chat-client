@@ -43,7 +43,10 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
                 Account Name
               </th>
               <th>
-                message
+                Message
+              </th>
+              <th>
+                From
               </th>
             </tr>
           </thead>
@@ -52,6 +55,7 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
             messages.map((msg, index) => <tr key={index}>
               <td>{msg.accountName}</td>
               <td>{msg.message}</td>
+              <td>{msg.type}</td>
             </tr>)
           }
           </tbody>
