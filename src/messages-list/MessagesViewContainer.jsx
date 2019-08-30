@@ -6,7 +6,7 @@ import messageTypes from './MessageTypes';
 
 const defaultWebsocketUrl = 'ws://localhost:8080';
 
-const parseFromMessage = ({ accountName, accountId, message, link, type }) => ({
+const parseFromMessage = ({ accountName, accountId, message, link, type, data = {} }) => ({
   message,
   link,
   accountName,
@@ -14,7 +14,8 @@ const parseFromMessage = ({ accountName, accountId, message, link, type }) => ({
   isUser: type === messageTypes.user,
   isClient: type === messageTypes.client,
   isLink: type === messageTypes.link,
-  type
+  type: type === messageTypes.client ? 'SUPPORT' : 'CLIENT',
+  data,
 });
 
 const parseToMessage = ({message, accountId, type, accountName}) => ({

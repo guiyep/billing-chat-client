@@ -54,7 +54,8 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
           {
             messages.map((msg, index) => <tr key={index}>
               <td>{msg.accountName}</td>
-              <td>{msg.message}</td>
+              {/* <td>{msg.message}</td> */}
+              <td><Message msg={msg} data={msg.data}/></td>
               <td>{msg.type}</td>
             </tr>)
           }
@@ -77,3 +78,23 @@ ChatWidget.propTypes = {
 };
 
 export default ChatWidget;
+
+const Message = ({ msg, data }) => {
+  console.log(msg, data)
+  const { message } = data || {};
+  if (message && message.src) {
+    return (
+      <div>
+        <div>Screenshot sent to support</div>
+        {message.src && <a href={message.src}><img style={{ width: '185px' }} src={message.src} alt="screenshot" /></a>}
+      </div>
+    );
+  }
+
+  if (msg.message) {
+    return msg.message;
+  }
+
+
+  return null;
+};
