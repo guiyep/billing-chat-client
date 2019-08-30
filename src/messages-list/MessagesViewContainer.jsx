@@ -40,7 +40,7 @@ const ChatWidgetContainer = memo(({ websocketUrl }) => {
 
   const handleData = (data = '') => {
     const newMessages = JSON.parse(data) || [];
-    if(newMessages.data){
+    if(newMessages.data && newMessages.name === 'GET-ALL-MESSAGES-CLIENT-SUCCEEDED'){
       setMessages([...newMessages.data.map(message => parseFromMessage(message))]);
     }
   };
