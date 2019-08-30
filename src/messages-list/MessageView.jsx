@@ -62,13 +62,13 @@ const ChatWidget = memo(({ messages, onNewMessages }) => {
           </tbody>
         </table>
       </div>
-    <div>
+      { accountNamesKeys && accountNamesKeys.length > 0 && <div className="send-message">
       <input name="message" type="text" value={message} onChange={onChange}></input>
       <select name="account" onChange={onChange}>
         {accountNamesKeys.map((name) => <option key={name} value={name}>{name}</option>)}
       </select>
       <button onClick={onNewMessagesHandler}>Send Message</button>
-    </div>
+    </div>}
   </Fragment>
 });
 
